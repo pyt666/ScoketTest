@@ -37,8 +37,8 @@ public class oneThread extends Thread{
 				i++;
 				System.out.println("session:"+session.getId()+",i:"+i);
 				try {
-		             //一分钟刷新一次
-		             Thread.sleep(1000);
+		             //2分钟刷新一次
+		             Thread.sleep(2000);
 		         } catch (InterruptedException e) {
 		             e.printStackTrace();
 		         }
