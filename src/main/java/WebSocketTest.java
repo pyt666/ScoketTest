@@ -1,12 +1,15 @@
 
 import java.io.IOException;
+import java.net.InetSocketAddress;
 import java.util.Map;
 import java.util.concurrent.CopyOnWriteArraySet;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.websocket.*;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
+import javax.xml.registry.infomodel.User;
 
 /**
  * @ServerEndpoint 注解是一个类层次的注解，它的功能主要是将目前的类定义成一个websocket服务器端,
@@ -33,6 +36,10 @@ public class WebSocketTest {
 	@OnOpen
 	public void onOpen(Session session){
 		System.out.println("onOpen");
+		/*String ipaddr=(String) session.getUserProperties().get("ClientIP");//将客户端IP地址从WebSocket的session中取出
+		System.out.println("Incoming connection from "+ipaddr);*/
+		InetSocketAddress remoteAddress = WebSocketUtils.getRemoteAddress(session);
+		System.out.println("有新连接加入！" + remoteAddress);
 		this.session = session;
 		webSocketSet.add(this);     //加入set中
 		addOnlineCount();		
@@ -55,7 +62,7 @@ public class WebSocketTest {
 
 	/**
 	 * 收到客户端消息后调用的方法
-	 * @param message 客户端发送过来的消息
+	 * @param device_sn 客户端发送过来的消息
 	 * @param session 可选的参数
 	 */
 	@OnMessage
